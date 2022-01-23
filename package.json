@@ -1,0 +1,21 @@
+{
+  "name": "facediv_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server"
+  },
+  "keywords": [],
+  "author": "Devesh Shakya",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "clarifai-nodejs-grpc": "^8.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7"
+  }
+}
