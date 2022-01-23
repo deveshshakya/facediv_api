@@ -3,13 +3,18 @@ const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 const stub = ClarifaiStub.grpc();
 
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key b22ab89b1bab46168589c598aa00d08d");
+
+const clarifaiKey = `Key ${process.env.CLARIFAI_AUTH_KEY}`
+const modelID = `${process.env.CLARIFAI_MODEL_ID}`
+const versionID = `${process.env.CLARIFAI_VERSION_ID}`
+
+metadata.set("authorization", clarifaiKey);
 
 const handleAPICall = (req, res) => {
   const inputURL = req.body.imgURL
 
   stub.PostModelOutputs({
-    model_id: "f76196b43bbd45c99b4f3cd8e8b40a8a", version_id: "45fb9a671625463fa646c3523a3087d5",  // This is optional. Defaults to the latest model version.
+    model_id: modelID, version_id: versionID,  // This is optional. Defaults to the latest model version.
     inputs: [{data: {image: {url: inputURL}}}]
   }, metadata, (err, response) => {
     if (err) {

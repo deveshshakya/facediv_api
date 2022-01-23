@@ -5,13 +5,13 @@ const userSchema = require('./models/userSchema');
 
 const register = require('./endpoints/register');
 const signIn = require('./endpoints/signIn');
-const getProfile = require("./endpoints/getProfile");
 const {handleAPICall, increaseEntries} = require("./endpoints/image");
 
 const PORT = process.env.PORT || 8081;
 const api = express();
 
-const dbUrl = `mongodb+srv://dshakya:bugcrowd@cluster0.ulokc.mongodb.net/facediv?retryWrites=true&w=majority`
+const dbUrl = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ulokc.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+const collectionName = `${process.env.COLLECTION_NAME}`
 
 // Connecting to db
 mongoose.connect(dbUrl)
@@ -21,7 +21,7 @@ mongoose.connect(dbUrl)
 //Bind connection to error event (to get notification of connection errors)
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-const usersConnection = mongoose.model('users', userSchema);
+const usersConnection = mongoose.model(collectionName, userSchema);
 
 // Allow CORS
 api.use(cors());
@@ -40,10 +40,6 @@ api.post('/api/v1/register', (req, res) => {
 api.post('/api/v1/signIn', (req, res) => {
   signIn(req, res, usersConnection);
 })
-
-// api.get('/api/v1/getProfile/:id', (req, res) => {
-//   getProfile(req, res, usersConnection);
-// })
 
 api.post('/api/v1/imageURL', ((req, res) => {
   handleAPICall(req, res);
