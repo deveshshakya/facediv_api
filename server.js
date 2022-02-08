@@ -18,7 +18,7 @@ mongoose.connect(dbUrl)
   .then(() => console.log("Connected to DB.."))
   .catch(() => console.log("Error in DB connection.."))
 
-//Bind connection to error event (to get notification of connection errors)
+// Bind connection to error event (to get notification of connection errors)
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const usersConnection = mongoose.model(collectionName, userSchema);
